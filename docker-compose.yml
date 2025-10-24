@@ -8,10 +8,12 @@ services:
     volumes:
       - ./docker/nginx/default.conf.template:/etc/nginx/templates/default.conf.template:ro
       - ./docker/laravel:/var/www/html
-      - /etc/letsencrypt/live/dev.nz748225.tw1.su/fullchain.pem:/etc/letsencrypt/live/dev.nz748225.tw1.su/fullchain.pem
-      - /etc/letsencrypt/live/dev.nz748225.tw1.su/privkey.pem:/etc/letsencrypt/live/dev.nz748225.tw1.su/privkey.pem
+      - ${FULLCHAIN_PATH}:/etc/letsencrypt/live/${APP_DOMAIN}/fullchain.pem
+      - ${PRIVKEY_PATH}:/etc/letsencrypt/live/${APP_DOMAIN}/privkey.pem
     environment:
       - APP_DOMAIN=${APP_DOMAIN}
+      - FULLCHAIN_PATH=${FULLCHAIN_PATH}
+      - PRIVKEY_PATH=${PRIVKEY_PATH}
     entrypoint: /bin/sh -c "envsubst '\$APP_DOMAIN' < /etc/nginx/templates/default.conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
     depends_on:
       - laravel_app
@@ -72,7 +74,7 @@ services:
     volumes:
       - ./docker/laravel:/var/www/html
     environment:
-      - VITE_APP_URL=https://dev.nz748225.tw1.su
+      - VITE_APP_URL=${VITE_APP_URL}
     command: sh -c "npm install && npm run build"
     ports:
       - "5173:5173"

@@ -16,8 +16,8 @@ server {
     
     charset utf-8;
     
-    ssl_certificate     /etc/letsencrypt/live/dev.nz748225.tw1.su/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/dev.nz748225.tw1.su/privkey.pem;
+    ssl_certificate     /etc/letsencrypt/live/${APP_DOMAIN}/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/${APP_DOMAIN}/privkey.pem;
 
     add_header X-Frame-Options "SAMEORIGIN";
     add_header X-Content-Type-Options "nosniff";

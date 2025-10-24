@@ -15,9 +15,9 @@ WORKDIR /var/www/html
 
 COPY --from=composer:2.8 /usr/bin/composer /usr/bin/composer
 
-RUN composer install --no-scripts --no-autoloader || true
+COPY ./docker/laravel/ /var/www/html/
 
-COPY ../../.env .env
+RUN composer install --no-interaction --optimize-autoloader
 
 RUN chown -R www-data:www-data /var/www/html
 
