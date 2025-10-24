@@ -15,8 +15,6 @@ WORKDIR /var/www/html
 
 COPY --from=composer:2.8 /usr/bin/composer /usr/bin/composer
 
-COPY ./ /var/www/html/ 
-
 RUN composer install --no-interaction --optimize-autoloader
 
 RUN chown -R www-data:www-data /var/www/html
