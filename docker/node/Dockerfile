@@ -1,10 +1,5 @@
 FROM node:20-alpine
 
-WORKDIR /var/www/html
-
-COPY docker/laravel/package*.json ./
-COPY .env .env
-
-RUN npm install
+COPY --from=php:8.2-fpm /var/www/html/package*.json ./
 
 EXPOSE 5173

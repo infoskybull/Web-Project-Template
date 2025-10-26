@@ -25,23 +25,21 @@ services:
     build:
       context: ./docker/laravel
     container_name: laravel_app
-    working_dir: /var/www/html
     volumes:
       - ./docker/laravel:/var/www/html
-      - ./docker/mysql/ssl:/etc/mysql/ssl:ro
       - ./docker/laravel/.my.cnf:/etc/mysql/my.cnf/
     environment:
       - APP_ENV=local
     networks: 
       - app-network
     entrypoint: ["php-fpm", "-F"] 
+    command: sh -c "composer install --no-interaction --optimize-autoloader"
     
   composer:
     image: composer:2.8
     container_name: composer
-    working_dir: /var/www/html
     volumes: 
-      - ./docker/laravel:/var/www/html
+      - ./docker/composer:/var/www/html
     networks:
       - app-network
     entrypoint: ["tail", "-f", "/dev/null"]
@@ -55,22 +53,20 @@ services:
       MYSQL_DATABASE: "${DB_DATABASE}"
       MYSQL_USER: "${DB_USERNAME}"
       MYSQL_PASSWORD: "${DB_PASSWORD}"
-    ports:
-      - "${DB_PORT:-3306}:3306" 
     volumes:
       - ./docker/mysql/data:/var/lib/mysql
       - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
-      - ./docker/mysql/ssl:/etc/mysql/ssl
+    ports:
+      - "${DB_PORT:-3306}:3306" 
     networks:
       - app-network
       
   node:
     image: node:20
     build:
-      context: ./
-      dockerfile: ./docker/node/Dockerfile
+      context: ./docker/node/
+      dockerfile: ./Dockerfile
     container_name: node
-    working_dir: /var/www/html
     volumes:
       - ./docker/laravel:/var/www/html
     environment:

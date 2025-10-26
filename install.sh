@@ -1,3 +1,6 @@
+docker builder prune -af
+docker system prune -af
+
 cp ./.env ./docker/laravel/.env
 docker compose down -v
 docker compose build --no-cache
