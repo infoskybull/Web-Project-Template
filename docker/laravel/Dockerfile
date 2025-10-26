@@ -11,5 +11,3 @@ COPY ./ ./
 COPY --from=composer:2.8 /usr/bin/composer /usr/bin/composer
 
 RUN chown -R www-data:www-data /var/www/html
-
-CMD ["php-fpm"]
