@@ -14,6 +14,9 @@ docker compose build --no-cache
 docker compose up -d
 
 chown -R www-data:www-data docker/laravel/
+
+sleep 2
+
 docker compose exec -T laravel_app php artisan migrate
 
 rm ./docker/laravel/public/build/ -r
