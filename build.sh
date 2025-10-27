@@ -10,3 +10,5 @@ docker compose exec -T laravel_app php artisan cache:clear
 docker compose exec -T laravel_app php artisan route:clear
 docker compose exec -T laravel_app php artisan view:clear
 
+docker compose exec -T node npm run build
+

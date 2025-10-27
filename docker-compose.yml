@@ -78,7 +78,7 @@ services:
       - "5173:5173"
     networks:
       - app-network
-    command: sh -c "tail -f /dev/null"
+    command: sh -c "npm install && tail -f /dev/null"
 
 networks:
   app-network:
