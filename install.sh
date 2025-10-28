@@ -13,7 +13,7 @@ docker compose down -v
 docker compose build --no-cache
 docker compose up -d
 
-sleep 2
+sleep 15
 
 docker compose exec -T laravel_app php artisan migrate
 
